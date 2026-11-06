@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * HTTP security rules.
+ * HTTP security rule.
  *
  * - Stateless: no server-side HTTP session; every request must carry its JWT.
  * - Public: register, login, the WebSocket handshake (/ws, authenticated later on the STOMP CONNECT frame)
