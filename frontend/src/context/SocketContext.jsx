@@ -19,7 +19,15 @@ import { useToast } from './ToastContext.jsx';
  */
 const SocketContext = createContext(null);
 
-const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\\/+$/, '');
+function normalizeBaseUrl(value) {
+  let normalized = value.trim();
+  while (normalized.endsWith('/')) {
+    normalized = normalized.slice(0, -1);
+  }
+  return normalized;
+}
+
+const API_BASE_URL = normalizeBaseUrl(import.meta.env.VITE_API_BASE_URL || '');
 
 function wsUrl() {
   if (!API_BASE_URL) {
