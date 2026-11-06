@@ -19,9 +19,16 @@ import { useToast } from './ToastContext.jsx';
  */
 const SocketContext = createContext(null);
 
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL || '').replace(/\\/+$/, '');
+
 function wsUrl() {
-  const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
-  return `${protocol}://${window.location.host}/ws`;
+  if (!API_BASE_URL) {
+    throw new Error('Backend URL is missing. Set VITE_API_BASE_URL in Vercel.');
+  }
+
+  const backendUrl = new URL(API_BASE_URL);
+  backendUrl.protocol = backendUrl.protocol === 'https:' ? 'wss:' : 'ws:';
+  return `${backendUrl.origin}/ws`;
 }
 
 export function SocketProvider({ children }) {
